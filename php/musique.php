@@ -16,13 +16,14 @@ function musique($phrase)
       if($mots[$i] != "des" || $mots[$i] != "de" || $mots[$i] != "video" || $mots[$i] != "videos")
         $song .= $mots[$i] . "+";
 
-    $youtube = file_get_contents("https://www.youtube.com/results?search_query=$song");
+    $youtube = file_get_contents("http://www.youtube.com/results?search_query=$song");
     /* On recupere l url */
     $final = preg_match('/data-context-item-id="(.*)" data-visibility-tracking/',$youtube, $music);
     if ($music[1])
     {
         $song = $music[1];
         echo "<p class=text>Voila la video de la musique : <br /><br /></p>";
+        echo "<script>responsiveVoice.speak('video pour la recherche : $phrase','French Female');</script>";
         echo "\n";
         echo "<p class=text><iframe width=\"95%\" height=\"600px\" src=\"//www.youtube.com/embed/$song?fs=1&autoplay=1&loop=1\" frameborder=\"0\" allowfullscreen></iframe></p>";
     }

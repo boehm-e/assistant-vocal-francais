@@ -48,42 +48,42 @@ function voice(){
                         });
                     }
                     else if($.inArray('ecouter', words) != -1 || $.inArray('écouter', words) != -1){
+                      $.ajax({
+                            url: 'php/musique.php',
+                            type: 'POST',
+                            data: {id:transcript},
+                            success: function(data) {
+                               $("#cartes").prepend('<div class="result">'+data+'</div>');
+                               $("#cartes").prepend($("#result"));
+                           }
+                       });
+                    }
+                     else if($.inArray('qui', words) != -1){
+                         $.ajax({
+                            url: 'php/who.php',
+                            type: 'POST',
+                            data: {id:transcript},
+                            success: function(data) {
+                               $("#cartes").prepend('<div class="result">'+data+'</div>');
+                               responsiveVoice.speak(data,"French Female");
+                               $("audio").hide();
+                               $("#cartes").prepend($("#result"));
+                           }
+                       });
+                     }
+                   else if($.inArray('allumer', words) != -1 || $.inArray('allumer', words) != -1){
                      $.ajax({
-                        url: 'php/musique.php',
-                        type: 'POST',
-                        data: {id:transcript},
-                        success: function(data) {
-                           $("#cartes").prepend('<div class="result">'+data+'</div>');
-                           $("#cartes").prepend($("#result"));
-                       }
+                       url : 'http://192.168.1.88/api/web/index.php/on',
+                       type : 'GET'
                    });
-                 }
-                 else if($.inArray('qui', words) != -1){
-                     $.ajax({
-                        url: 'php/who.php',
-                        type: 'POST',
-                        data: {id:transcript},
-                        success: function(data) {
-                           $("#cartes").prepend('<div class="result">'+data+'</div>');
-                           responsiveVoice.speak(data,"French Female");
-                           $("audio").hide();
-                           $("#cartes").prepend($("#result"));
-                       }
-                   });
-                 }
-                 else if($.inArray('allumer', words) != -1 || $.inArray('allumer', words) != -1){
-                   $.ajax({
-                     url : 'http://192.168.1.88/api/web/index.php/on',
-                     type : 'GET'
-                 });
-                   $("#cartes").prepend('<div class="result"><button id="on">on</button><button id="off">off</button></div>');
-                   $("#on").click(function() {
-                       $.ajax({
-                         url : 'http://192.168.1.88/api/web/index.php/on',
-                         type : 'GET'
+                     $("#cartes").prepend('<div class="result"><button id="on">on</button><button id="off">off</button></div>');
+                     $("#on").click(function() {
+                         $.ajax({
+                           url : 'http://192.168.1.88/api/web/index.php/on',
+                           type : 'GET'
+                       });
+                         responsiveVoice.speak("il fait jour maintenant","French Female");
                      });
-                       responsiveVoice.speak("il fait jour maintenant","French Female");
-                   });
                    $("#off").click(function() {
                        $.ajax({
                          url : 'http://192.168.1.88/api/web/index.php/off',

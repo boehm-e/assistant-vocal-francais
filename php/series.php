@@ -1,6 +1,5 @@
 
 <?php
-include ("tts.php");
 $streamzzz = file_get_contents("http://streamzzz.com/");
 $final = preg_match_all('/<h1><a href="http.*".(.*)<\/a><\/h1>/',$streamzzz, $series);
 $i = 1;
@@ -30,13 +29,8 @@ else
 
 
 if ($i == 1)
-  tts("Il n'y en a pas");
+  echo "<script>responsiveVoice.speak('aucunes','French Female');</script>";
 else
-  tts("Je vous affiche les séries.");
+  echo "<script>responsiveVoice.speak('voila les séries disponibles','French Female');</script>";
 
-
-
-echo "<audio controls autoplay hidden>
-  <source src=\"audio.mp3\" type=\"audio/mp3\" />
-</audio>";
 ?>
